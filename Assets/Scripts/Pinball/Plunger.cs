@@ -3,9 +3,17 @@ using UnityEngine;
 [RequireComponent(typeof(SpringJoint))]
 public class Plunger : MonoBehaviour
 {
-    [SerializeField] SpringJoint _spring;
+    [SerializeField] private SpringJoint _spring;
+    [SerializeField] private float _forceSpring;
 
+    private Rigidbody _springRigidbody;
+    private const float _maxPositionPluger = 85f;
+    private const float _minPositionPluger = 103f;
 
+    private void Start()
+    {
+        _springRigidbody = GetComponent<Rigidbody>();
+    }
 
     private void OnValidate()
     {
@@ -14,6 +22,7 @@ public class Plunger : MonoBehaviour
 
     private void Update()
     {
-        
+            
     }
+
 }

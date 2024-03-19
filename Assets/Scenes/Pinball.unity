@@ -14537,6 +14537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spring: {fileID: 1642824869}
+  _forceSpring: 0
 --- !u!145 &1642824869
 SpringJoint:
   m_ObjectHideFlags: 0
