@@ -5,27 +5,35 @@ public class FlipperInput : MonoBehaviour
     [SerializeField] private HingeJoint _rightFlipper;
     [SerializeField] private HingeJoint _leftFlipper;
 
-    private JointSpring _flipperSpring;
+    private JointSpring _rightFlipperSpring;
+    private JointSpring _leftFlipperSpring;
 
     private void Awake()
     {
-        _flipperSpring = _rightFlipper.spring;
+        _rightFlipperSpring = _rightFlipper.spring;
+        _leftFlipperSpring = _leftFlipper.spring;
     }
 
     private void Update()
     {
-        float rightFlipper = Input.GetAxis("RFiliper");
-        Debug.Log(rightFlipper);
+        FlipInput(ref _rightFlipper, ref _rightFlipperSpring, 60, KeyCode.E);
+        FlipInput(ref _leftFlipper, ref _leftFlipperSpring, -60, KeyCode.Q);
+    }
 
-        if (rightFlipper > 0.5f)
+    private void FlipInput(ref HingeJoint joint, ref JointSpring springJoint, float angle, KeyCode key)
+    {
+        if (Input.GetKeyDown(key))
         {
-            _flipperSpring.targetPosition = 45f;
+            springJoint.targetPosition = angle;
         }
         else
         {
-            _flipperSpring.targetPosition = 0;
+            if (Input.GetKeyUp(key))
+            {
+                springJoint.targetPosition = 0;
+            }
         }
 
-        _rightFlipper.spring = _flipperSpring;
+        joint.spring = springJoint;
     }
 }
