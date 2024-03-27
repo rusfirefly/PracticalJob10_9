@@ -24,11 +24,6 @@ public class Plunger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "maxTriger")
-        {
-            //_springRigidbody.isKinematic = true;
-            //_spring.spring = 0;
-        }
         if(other.tag == "minTriger")
             _isMinSpring = true;
     }
@@ -41,26 +36,25 @@ public class Plunger : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            _springMin.connectedBody = null;
-            _spring = _tempSpring;
-            _spring.connectedBody = _springRigidbody;
-            _springMin.anchor = _anchorMax;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-       if (Input.GetKey(KeyCode.Space))
-       {
             _spring.connectedBody = null;
             _springMin.connectedBody = _springRigidbody;
             _spring = _springMin;
             Vector3 anchor = _spring.anchor;
-            anchor.z += 15f * Time.deltaTime; 
+            anchor.z += 15f * Time.deltaTime;
             _spring.anchor = anchor;
-       }
+        }
+        else
+        {
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                _springMin.connectedBody = null;
+                _spring = _tempSpring;
+                _spring.connectedBody = _springRigidbody;
+                _springMin.anchor = _anchorMax;
+            }
+        }
     }
 
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7170466834523887915}
   - component: {fileID: 7170466834523887918}
   - component: {fileID: 7170466834523887919}
+  - component: {fileID: 7732805320647440170}
   m_Layer: 0
   m_Name: Push
   m_TagString: Untagged
@@ -116,6 +117,8 @@ MonoBehaviour:
     m_Bits: 128
   _force: 800
   _radiusPush: 5
+  _point: {fileID: 0}
+  _effect: {fileID: 1845240806346120, guid: b395d5d6eb4b4b846acc021ee036b744, type: 3}
 --- !u!54 &7170466834523887919
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,3 +135,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7732805320647440170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7170466834523887957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7283cb99dc932954e8e69205dcbd651f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pointValue: 100
