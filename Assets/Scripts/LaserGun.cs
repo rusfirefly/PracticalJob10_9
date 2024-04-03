@@ -7,12 +7,11 @@ public class LaserGun : Weapon
     [SerializeField] private LineRenderer _laserBeam;
     [SerializeField] private Transform _attackPosition;
     [SerializeField] private ParticleSystem _effectAttack;
-    [SerializeField] private GameObject _hitEffect;
+    [SerializeField] private ParticleSystem _hitEffect;
 
     private float _maxDistance=50f;
     private float _currentTime;
     private float _speedAttak;
-
     private bool _isAttack;
 
     private void Start()
@@ -38,9 +37,19 @@ public class LaserGun : Weapon
 
         if(cast)
         {
-            StartHitEffect(hitPosition);
+            if(!_hitEffect.isPlaying)
+                _hitEffect.Play();
+
+            _hitEffect.transform.position = hitPosition;
         }
-        
+
+        if (cast && hit.collider.TryGetComponent(out Explosion explosion))
+        {
+            float attackPerSecomd = _weapon.Damage/100;
+            explosion.TakeDamage(attackPerSecomd);
+        }
+
+
     }
 
     public void Activate()
@@ -60,6 +69,9 @@ public class LaserGun : Weapon
 
         if (_effectAttack.isPlaying)
             _effectAttack.Stop();
+
+        if(_hitEffect.isPlaying)
+            _hitEffect.Stop();
     }
 
     private void DrawLaserBeam(Vector3 startPosition, Vector3 hitPosition)
@@ -68,9 +80,4 @@ public class LaserGun : Weapon
         _laserBeam.SetPosition(1, hitPosition);
     }
 
-    private void StartHitEffect(Vector3 hitPosition)
-    {
-        if (_hitEffect)
-            Instantiate(_hitEffect, hitPosition, Quaternion.identity);
-    }
 }

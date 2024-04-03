@@ -10,8 +10,6 @@ public class MouseLook : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        _xRotation = 0f;
-        transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
     }
 
     private void FixedUpdate()
@@ -21,9 +19,8 @@ public class MouseLook : MonoBehaviour
 
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -90, 90);
-
+        
         transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
-
         _playerBody.Rotate(Vector3.up * mouseX);
     }
 }

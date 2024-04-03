@@ -6,6 +6,7 @@ TagManager:
   tags:
   - maxTriger
   - minTrigger
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - minSpringPosition
   - startPositionBall
   - Ground
-  - 
-  - 
+  - PostProcessing
+  - exploded
   - 
   - 
   - 

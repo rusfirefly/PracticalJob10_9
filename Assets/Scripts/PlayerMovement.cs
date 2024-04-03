@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _isGround = Physics.CheckSphere(_grountCheck.position, _groundDistance, _groundMask);
 
-
         if(_isGround && _velocity.y < 0)
         {
             _velocity.y = -2f;
