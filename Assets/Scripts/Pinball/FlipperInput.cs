@@ -7,6 +7,7 @@ public class FlipperInput : MonoBehaviour
 
     private JointSpring _rightFlipperSpring;
     private JointSpring _leftFlipperSpring;
+    private float _angle = 60f;
 
     private void Awake()
     {
@@ -16,8 +17,8 @@ public class FlipperInput : MonoBehaviour
 
     private void Update()
     {
-        FlipInput(ref _rightFlipper, ref _rightFlipperSpring, 60, KeyCode.E);
-        FlipInput(ref _leftFlipper, ref _leftFlipperSpring, -60, KeyCode.Q);
+        FlipInput(ref _rightFlipper, ref _rightFlipperSpring, _angle, KeyCode.E);
+        FlipInput(ref _leftFlipper, ref _leftFlipperSpring, _angle * -1, KeyCode.Q);
     }
 
     private void FlipInput(ref HingeJoint joint, ref JointSpring springJoint, float angle, KeyCode key)

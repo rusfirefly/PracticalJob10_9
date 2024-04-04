@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -16,9 +14,20 @@ public class PlayerMovement : MonoBehaviour
     private float _groundDistance = 0.4f;
     private bool _isGround;
 
+    private bool _isPressButtonE;
+    private Interactable _interactableObject;
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (_interactableObject)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                _interactableObject.OnInteract();
+            }
+            
+        }
+
         _isGround = Physics.CheckSphere(_grountCheck.position, _groundDistance, _groundMask);
 
         if(_isGround && _velocity.y < 0)
@@ -31,12 +40,37 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && _isGround)
         {
-            Debug.Log("jump");
-            _velocity.y = Mathf.Sqrt(_jumpHeight * -2 * _gravity);
+            _velocity.y = Mathf.Sqrt(_jumpHeight * -1f * _gravity);
         }
 
         Move(x, z);
         Gravity();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        CheckInteracteble(other, true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        CheckInteracteble(other, false);
+        _interactableObject = null;
+    }
+
+    private void CheckInteracteble(Collider collider, bool show)
+    {
+       Interactable interactable = collider.GetComponent<Interactable>();
+        _interactableObject = interactable;
+       if(interactable)
+       {
+            if (show)
+            {
+                interactable.ShowMessage();
+            }
+            else
+                interactable.HideMessage();
+       }
     }
 
     private void Move(float x, float z)
@@ -48,6 +82,6 @@ public class PlayerMovement : MonoBehaviour
     private void Gravity()
     {
         _velocity.y += _gravity * Time.deltaTime;
-        _controller.Move(_velocity * Time.deltaTime);
+        _controller.Move(_velocity * Time.deltaTime * 2f);
     }
 }

@@ -8,11 +8,10 @@ public class GameHandler : MonoBehaviour
 
     [SerializeField] private Transform _spawnPlayer;
     [SerializeField] private GameObject _ball;
-    private Vector3 _rotationDefault;
+
 
     public void Initialized()
     {
-        _rotationDefault = _ball.transform.eulerAngles;
         NewGame();
     }
 
@@ -28,8 +27,9 @@ public class GameHandler : MonoBehaviour
 
     public void NewGame()
     {
+        _ball.transform.position = Vector3.zero;
+        _ball.transform.eulerAngles = Vector3.zero;
         _ball.transform.position = _spawnPlayer.position;
-        _ball.transform.eulerAngles = _rotationDefault;
         
         NewGameEvent?.Invoke();
     }

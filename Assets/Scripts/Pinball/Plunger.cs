@@ -1,6 +1,5 @@
 using UnityEngine;
 
-//[RequireComponent(typeof(SpringJoint))]
 public class Plunger : MonoBehaviour
 {
     [SerializeField] private SpringJoint _spring;
@@ -8,31 +7,16 @@ public class Plunger : MonoBehaviour
     [SerializeField] private float _forceSpring;
 
     [SerializeField] private Rigidbody _springRigidbody;
-    private bool _isMinSpring;
     [SerializeField] private SpringJoint _tempSpring;
-    [SerializeField] private Rigidbody _springRB;
-    private float _anchorMin;
     private Vector3 _anchorMax;
 
     private void Start()
     {
         _springRigidbody = GetComponent<Rigidbody>();
         _tempSpring = _spring;
-        _springRB = _tempSpring.connectedBody;
         _anchorMax = _springMin.anchor;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "minTriger")
-            _isMinSpring = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "minTriger")
-            _isMinSpring = false;
-    }
 
     private void Update()
     {

@@ -8,6 +8,6 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Shoot()
     {
-
+        Debug.Log("pif-paf!");
     }
 }

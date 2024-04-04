@@ -10,7 +10,6 @@ public class Explosion : MonoBehaviour
     [SerializeField] private LayerMask _layerExplosion;
     private bool _isExplosion;
 
-        
 
     public void TakeDamage(float damage)
     {
@@ -35,11 +34,21 @@ public class Explosion : MonoBehaviour
                     explosion.TakeDamage(1000);
                 }
 
+                if (collider.TryGetComponent(out Enemy enemy))
+                {
+                    enemy.TakeDamage(1000);
+                }
+
                 Rigidbody rigidbody = collider.attachedRigidbody;
                 if (rigidbody)
                 {
-                    rigidbody.isKinematic = false;
-                    rigidbody.AddExplosionForce(_forceBoom, transform.position, _radusBoom, 1f);
+
+                    float distance = Vector3.Distance(transform.position, rigidbody.transform.position);
+                    if (distance <= _radusBoom)
+                    {
+                        float force = _forceBoom * (_radusBoom - distance);
+                        rigidbody.AddExplosionForce(force, transform.position, _radusBoom, 1f);
+                    }
                 }
             }
 

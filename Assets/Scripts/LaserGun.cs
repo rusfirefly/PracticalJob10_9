@@ -10,13 +10,9 @@ public class LaserGun : Weapon
     [SerializeField] private ParticleSystem _hitEffect;
 
     private float _maxDistance=50f;
-    private float _currentTime;
-    private float _speedAttak;
-    private bool _isAttack;
 
     private void Start()
     {
-        _speedAttak = _weapon.SpeedAttack;
         _laserBeam.enabled = false;
         _effectAttack.Stop();
     }
@@ -49,7 +45,11 @@ public class LaserGun : Weapon
             explosion.TakeDamage(attackPerSecomd);
         }
 
-
+        if (cast && hit.collider.TryGetComponent(out Enemy enemy))
+        {
+            float attackPerSecomd = _weapon.Damage / 100;
+            enemy.TakeDamage(attackPerSecomd);
+        }
     }
 
     public void Activate()

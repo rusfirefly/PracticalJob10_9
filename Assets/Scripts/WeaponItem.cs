@@ -9,8 +9,6 @@ public class WeaponItem : ScriptableObject
 
     [field: SerializeField] public float SpeedAttack { get; private set; }
 
-
-
     [field: SerializeField] public GameObject Bullet { get; private set; }
 
 }
