@@ -109,6 +109,6 @@ public class Enemy : MonoBehaviour
     }
 
     private Vector3 NextRandomPoint() => new Vector3(_random.Next((int)transform.position.x - 2, (int)transform.position.x + 2),
-                                                    (int)transform.position.y + 0.4f, 
+                                                    (int)transform.position.y + 0.55f, 
                                                     _random.Next((int)transform.position.z-2,(int)transform.position.z + 2));
 }

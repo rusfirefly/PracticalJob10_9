@@ -16,8 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool _isPressButtonE;
     private Interactable _interactableObject;
-
-    private void FixedUpdate()
+    private void Update()
     {
         if (_interactableObject)
         {
@@ -25,8 +24,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 _interactableObject.OnInteract();
             }
-            
         }
+
+        if (Input.GetButtonDown("Jump") && _isGround)
+        {
+            _velocity.y = Mathf.Sqrt(_jumpHeight * -1f * _gravity);
+        }
+    }
+
+    private void FixedUpdate()
+    {
 
         _isGround = Physics.CheckSphere(_grountCheck.position, _groundDistance, _groundMask);
 
@@ -38,10 +45,7 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        if (Input.GetButtonDown("Jump") && _isGround)
-        {
-            _velocity.y = Mathf.Sqrt(_jumpHeight * -1f * _gravity);
-        }
+
 
         Move(x, z);
         Gravity();
