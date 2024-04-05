@@ -26,31 +26,23 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _aggressionRadius, _targetMask);
 
-        if (colliders.Length>0)
-            _isDetectPlayer = true;
-        else
-            _isDetectPlayer = false;
-
-        foreach (Collider collider in colliders)
-        {
-        
-            MoveToTarget(collider.transform.position);
-        }
+        DetectPlayer();
 
         if (!_isDetectPlayer)
         {
-            float distance = Vector3.Distance(transform.position, _randomPosition);
-            if(distance <= 1f)
+            if (_typeEnemy == Type.Mobile)
             {
-                _randomPosition = NextRandomPoint();
-            }
+                float distance = Vector3.Distance(transform.position, _randomPosition);
+                if (distance <= 1f)
+                {
+                    _randomPosition = NextRandomPoint();
+                }
 
-            MoveToTarget(_randomPosition);
+                MoveToTarget(_randomPosition);
+            }
         }
     }
-
 
     private void OnDrawGizmos()
     {
@@ -74,21 +66,38 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void DetectPlayer()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _aggressionRadius, _targetMask);
+        foreach (Collider collider in colliders)
+        {
+            Player player = collider.GetComponent<Player>();
+            if (player)
+            {
+                _isDetectPlayer = true;
+                MoveToTarget(collider.transform.position);
+            }
+            else
+            {
+                _isDetectPlayer = false;
+            }
+        }
+    }
+
     private void MoveToTarget(Vector3 target)
     {
         if (!_isDetectPlayer)
             if (_typeEnemy == Type.Passive) return;
 
-        RotateToTarget(target);
-        //transform.LookAt(target);
-        Vector3 direction = target - transform.position;
         if(_isDetectPlayer)
         {
             float distance = Vector3.Distance(transform.position, target);
             if (distance <= 1f) return;
         }
 
-        transform.Translate(direction.normalized * _speed * Time.deltaTime);
+        transform.LookAt(target);
+        transform.position = Vector3.MoveTowards(transform.position, target, _speed * Time.deltaTime);
+
     }
 
     private void RotateToTarget(Vector3 targetDirection)
@@ -100,6 +109,6 @@ public class Enemy : MonoBehaviour
     }
 
     private Vector3 NextRandomPoint() => new Vector3(_random.Next((int)transform.position.x - 2, (int)transform.position.x + 2),
-                                                    transform.position.y - 0.4f, 
+                                                    (int)transform.position.y + 0.4f, 
                                                     _random.Next((int)transform.position.z-2,(int)transform.position.z + 2));
 }
